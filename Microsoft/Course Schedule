@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool vis[100005];
+    bool dfsvis[100005];
+    bool detectCycle(int i,vector<int> adj[]){
+        vis[i]=dfsvis[i]=1;
+        for(auto x: adj[i]){
+            if(!vis[x]){
+                if(detectCycle(x,adj)) return true;
+            }else if(dfsvis[x]) return true;
+        }
+        dfsvis[i]=0;
+        return false;
+    }
+    bool canFinish(int n, vector<vector<int>>& p) {
+        vector<int> adj[n];
+        int m = p.size();
+        for(int i= 0;i<m;i++){
+            adj[p[i][0]].push_back(p[i][1]);
+        }
+        for(int i =0;i<n;i++)
+        if(!vis[i])
+          if(detectCycle(i,adj)) return false;
+        return true;
+    }
+};
