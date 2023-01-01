@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool vis[10];
+    vector<vector<int> > ans;
+    set<vector<int> > s;
+    void get(int k , int n,vector<int> v){
+        if(n==0&&k==0){
+            sort(v.begin(),v.end());
+            s.insert(v);
+            return;
+        }
+        if(n==0||k==0) return;
+        for(int i =1;i<=9;i++){
+            if(!vis[i]&&i<=n){
+                vis[i] = 1;
+                v.push_back(i);
+                get(k-1,n-i,v);
+                v.pop_back();
+                vis[i]=0;
+            }
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        if(n>45 || n<k*(k+1)/2) return ans;
+        vector<int> v;
+        get(k,n,v);
+        for(auto x:s) ans.push_back(x);
+        return ans;
+    }
+};
